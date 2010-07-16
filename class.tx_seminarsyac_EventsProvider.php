@@ -57,6 +57,7 @@ class tx_seminarsyac_EventsProvider {
 			 * @var $event tx_seminars_Model_Event
 			 */
 			$eventData[] = array(
+				'hook' => 1,
 				'uid' => $event->getUid(),
 				'dateuid' => $event->getUid(),
 				'startdat' => $event->getBeginDateAsUnixTimestamp(),
