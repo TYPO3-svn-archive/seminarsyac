@@ -3,7 +3,7 @@
 ########################################################################
 # Extension Manager/Repository config file for ext "seminarsyac".
 #
-# Auto generated 16-07-2010 15:31
+# Auto generated 16-07-2010 15:49
 #
 # Manual updates:
 # Only the data in the array - everything else is removed by next
@@ -42,7 +42,9 @@ $EM_CONF[$_EXTKEY] = array(
 		'suggests' => array(
 		),
 	),
-	'_md5_values_when_last_written' => 'a:4:{s:9:"ChangeLog";s:4:"aa83";s:12:"ext_icon.gif";s:4:"1bdc";s:19:"doc/wizard_form.dat";s:4:"4b1e";s:20:"doc/wizard_form.html";s:4:"c553";}',
+	'_md5_values_when_last_written' => 'a:5:{s:9:"ChangeLog";s:4:"aa83";s:39:"class.tx_seminarsyac_EventsProvider.php";s:4:"5acd";s:16:"ext_autoload.php";s:4:"d940";s:12:"ext_icon.gif";s:4:"35fc";s:17:"ext_localconf.php";s:4:"9b77";}',
+	'suggests' => array(
+	),
 );
 
 ?>
