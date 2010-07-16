@@ -28,12 +28,14 @@ $EM_CONF[$_EXTKEY] = array(
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
-	'author_company' => '',
-	'version' => '0.0.0',
+	'author_company' => 'oliverklee.de',
+	'version' => '0.1.0',
 	'constraints' => array(
 		'depends' => array(
+			'php' => '5.2.0-0.0.0',
+			'typo3' => '4.3.0-0.0.0',
 			'ke_yac' => '',
-			'seminars' => '',
+			'seminars' => '0.9.63',
 		),
 		'conflicts' => array(
 		),
