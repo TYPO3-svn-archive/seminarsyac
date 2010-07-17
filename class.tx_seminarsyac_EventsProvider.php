@@ -70,6 +70,17 @@ class tx_seminarsyac_EventsProvider {
 			);
 		}
 	}
+
+	/**
+	 * Gets the category UID for all events provided by this provider.
+	 *
+	 * @return integer category UID, will be > 0 for a correct configuration,
+	 *                 will be 0 if not set
+	 */
+	public function getCategoryUid() {
+		return tx_oelib_ConfigurationRegistry::get('plugin.tx_seminarsyac')
+			->getAsInteger('categoryUid');
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/seminarsyac/class.tx_seminarsyac_EventsProvider.php']) {

@@ -1,2 +1,4 @@
 plugin.tx_seminarsyac {
+  # UID of the ke_yac category for all events from the seminars extension
+  categoryUid =
 }
