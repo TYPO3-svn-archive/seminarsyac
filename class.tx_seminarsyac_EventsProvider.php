@@ -35,7 +35,21 @@ require_once(t3lib_extMgm::extPath('oelib') . 'class.tx_oelib_Autoloader.php');
  *
  * @author Oliver Klee <typo3-coding@oliverklee.de>
  */
-class tx_seminarsyac_EventsProvider {
+class tx_seminarsyac_EventsProvider extends tslib_pibase {
+	/**
+	 * The constructor.
+	 */
+	public function __construct() {
+		$this->cObj = $GLOBALS['TSFE']->cObj;
+	}
+
+	/**
+	 * The destructor.
+	 */
+	public function __destruct() {
+		unset($this->cObj);
+	}
+
 	/**
 	 * Retrieves events and adds them to $events.
 	 *
@@ -50,12 +64,17 @@ class tx_seminarsyac_EventsProvider {
 	 *        the (already filled) list of events, will be modified
 	 */
 	public function retrieveEvents($start, $end, $pageUids, array &$eventData) {
+		$pageUidsExploded = t3lib_div::intExplode(',', $pageUids, TRUE);
+
 		$events = tx_oelib_MapperRegistry::get('tx_seminars_Mapper_Event')
 			->findAllByBeginDate($start, $end);
 		foreach ($events as $event) {
-			/**
-			 * @var $event tx_seminars_Model_Event
-			 */
+			if (!empty($pageUidsExploded)
+				&& !in_array($event->getPageUid(), $pageUidsExploded)
+			) {
+				continue;
+			}
+
 			$eventData[] = array(
 				'hook' => 1,
 				'uid' => $event->getUid(),
@@ -80,6 +99,30 @@ class tx_seminarsyac_EventsProvider {
 	public function getCategoryUid() {
 		return tx_oelib_ConfigurationRegistry::get('plugin.tx_seminarsyac')
 			->getAsInteger('categoryUid');
+	}
+
+	/**
+	 * Creates the URL to the single view of the event with the UID $uid.
+	 *
+	 * @param integer $uid the UID of an existing event, must be > 0
+	 *
+	 * @return string the link to the single view
+	 */
+	public function createSingleViewUrl($uid) {
+		return tx_oelib_ObjectFactory::make('tx_seminars_seminar', $uid)
+			->getDetailedViewUrl($this, FALSE);
+	}
+
+	/**
+	 * Gets an integer configuration value from the seminars pi1 configuration.
+	 *
+	 * @param string $key the key of the data to retrieve, must not be empty
+	 *
+	 * @return integer the data for that key
+	 */
+	public function getConfValueInteger($key) {
+		return tx_oelib_ConfigurationRegistry::get('plugin.tx_seminars_pi1')
+			->getAsInteger($key);
 	}
 }
 
