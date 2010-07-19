@@ -109,7 +109,11 @@ class tx_seminarsyac_EventsProvider extends tslib_pibase {
 	 * @return string the link to the single view
 	 */
 	public function createSingleViewUrl($uid) {
-		return tx_oelib_ObjectFactory::make('tx_seminars_seminar', $uid)
+		$className = (class_exists('tx_seminars_OldModel_Event', TRUE))
+			? 'tx_seminars_OldModel_Event' : 'tx_seminars_seminar';
+
+
+		return tx_oelib_ObjectFactory::make($className, $uid)
 			->getDetailedViewUrl($this, FALSE);
 	}
 
