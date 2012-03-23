@@ -66,12 +66,10 @@ class tx_seminarsyac_EventsProvider extends tslib_pibase {
 	public function retrieveEvents($start, $end, $pageUids, array &$eventData) {
 		$pageUidsExploded = t3lib_div::intExplode(',', $pageUids, TRUE);
 
-		$events = tx_oelib_MapperRegistry::get('tx_seminars_Mapper_Event')
-			->findAllByBeginDate($start, $end);
+		$events = tx_oelib_MapperRegistry::get('tx_seminars_Mapper_Event')->findAllByBeginDate($start, $end);
+		/** @var $event tx_seminars_Model_Event */
 		foreach ($events as $event) {
-			if (!empty($pageUidsExploded)
-				&& !in_array($event->getPageUid(), $pageUidsExploded)
-			) {
+			if (!empty($pageUidsExploded) && !in_array($event->getPageUid(), $pageUidsExploded)) {
 				continue;
 			}
 
@@ -109,12 +107,10 @@ class tx_seminarsyac_EventsProvider extends tslib_pibase {
 	 * @return string the link to the single view
 	 */
 	public function createSingleViewUrl($uid) {
-		$className = (class_exists('tx_seminars_OldModel_Event', TRUE))
-			? 'tx_seminars_OldModel_Event' : 'tx_seminars_seminar';
+		/** @var $linkBuilder tx_seminars_Service_SingleViewLinkBuilder */
+		$linkBuilder = tx_oelib_ObjectFactory::make('tx_seminars_Service_SingleViewLinkBuilder');
 
-
-		return tx_oelib_ObjectFactory::make($className, $uid)
-			->getDetailedViewUrl($this, FALSE);
+		return $linkBuilder->createAbsoluteUrlForEvent(tx_oelib_MapperRegistry::get('tx_seminars_Mapper_Event')->find($uid));
 	}
 
 	/**
@@ -125,8 +121,7 @@ class tx_seminarsyac_EventsProvider extends tslib_pibase {
 	 * @return integer the data for that key
 	 */
 	public function getConfValueInteger($key) {
-		return tx_oelib_ConfigurationRegistry::get('plugin.tx_seminars_pi1')
-			->getAsInteger($key);
+		return tx_oelib_ConfigurationRegistry::get('plugin.tx_seminars_pi1')->getAsInteger($key);
 	}
 }
 
